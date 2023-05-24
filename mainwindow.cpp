@@ -13,3 +13,33 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_pbGenerate_clicked()
+{
+
+}
+
+
+void MainWindow::on_pbLoad_clicked()
+{
+
+}
+
+
+void MainWindow::on_pbStart_clicked()
+{
+
+}
+
+
+void MainWindow::on_pbPause_clicked()
+{
+
+}
+
+
+void MainWindow::on_pbRestart_clicked()
+{
+
+}
+

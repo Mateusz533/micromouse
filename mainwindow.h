@@ -19,7 +19,18 @@ class MainWindow : public QMainWindow
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-  private:
+private slots:
+    void on_pbGenerate_clicked();
+
+    void on_pbLoad_clicked();
+
+    void on_pbStart_clicked();
+
+    void on_pbPause_clicked();
+
+    void on_pbRestart_clicked();
+
+private:
     Ui::MainWindow *ui;
 };
 
