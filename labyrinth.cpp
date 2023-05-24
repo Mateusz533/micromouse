@@ -1,8 +1,7 @@
 
 #include "labyrinth.h"
 
-Labyrinth::Labyrinth()
+Labyrinth::Labyrinth(const int size)
 {
 
 }
-

@@ -12,11 +12,14 @@ SOURCES += \
     labyrinth.cpp \
     main.cpp \
     mainwindow.cpp \
-    robot.cpp
+    myrobot.cpp
 
 HEADERS += \
+    border.h \
     labyrinth.h \
     mainwindow.h \
+    movement.h \
+    myrobot.h \
     robot.h
 
 FORMS += \
