@@ -3,6 +3,7 @@
 #define MYROBOT_H
 
 #include "border.h"
+#include "mazesketch.h"
 #include "robot.h"
 #include <vector>
 
@@ -20,8 +21,7 @@ class MyRobot : public Robot
                            const bool down);
     Movement getFloodMovement();
 
-    std::vector<std::vector<Border>> vertical_walls_;
-    std::vector<std::vector<Border>> horizontal_walls_;
+    MazeSketch<Border, Border::Walled> predicted_sketch_;
     int position_x_;
     int position_y_;
     const int target_x_;

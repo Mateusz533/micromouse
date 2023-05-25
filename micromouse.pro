@@ -12,12 +12,15 @@ SOURCES += \
     labyrinth.cpp \
     main.cpp \
     mainwindow.cpp \
+    mazewidget.cpp \
     myrobot.cpp
 
 HEADERS += \
     border.h \
     labyrinth.h \
     mainwindow.h \
+    mazesketch.h \
+    mazewidget.h \
     movement.h \
     myrobot.h \
     robot.h

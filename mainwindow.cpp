@@ -2,20 +2,26 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
+#include <QPainter>
 #include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
-  , maze_(16)
+  , maze_puzzle_(16)
 {
     ui->setupUi(this);
+
+    QHBoxLayout *hbox = new QHBoxLayout();
+    ui->frMaze->setLayout(hbox);
+    hbox->addWidget(&maze_view_);
+
     timer_ = new QTimer(this);
     timer_->setInterval(1000);
     connect(timer_, &QTimer::timeout, this, [this]() {
-        this->maze_.step();
-        const auto mouse_pose = maze_.getRobotPosition();
-        updateMousePosition(mouse_pose);
+        this->maze_puzzle_.step();
+        const auto mouse_pose = maze_puzzle_.getRobotPosition();
+        drawMouseMove(mouse_pose);
     });
 }
 
@@ -28,7 +34,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_pbGenerate_clicked()
 {
     timer_->stop();
-    maze_.generateRandomSketch();
+    maze_puzzle_.generateRandomSketch();
     reset();
 }
 
@@ -39,7 +45,7 @@ void MainWindow::on_pbLoad_clicked()
       QFileDialog::getOpenFileName(this, tr("Open Maze"), "./",
                                    tr("Text Files (*.txt)"))
         .toStdString();
-    const bool valid = maze_.getSketchFromFile(path);
+    const bool valid = maze_puzzle_.getSketchFromFile(path);
     if (!valid)
         ui->statusbar->showMessage(
           QString::fromUtf8("Nie można odczytać pliku."));
@@ -64,16 +70,10 @@ void MainWindow::on_pbRestart_clicked()
     timer_->start();
 }
 
-void MainWindow::drawMaze(
-  std::pair<int, int> target_pose, std::pair<int, int> mouse_pose,
-  std::vector<std::vector<std::pair<bool, bool>>> sketch)
+void MainWindow::drawMouseMove(std::pair<int, int>)
 {
-    // TODO
-}
-
-void MainWindow::updateMousePosition(std::pair<int, int>)
-{
-    // TODO
+    const std::pair<int, int> mouse_pose = maze_puzzle_.getRobotPosition();
+    maze_view_.updateMousePosition(mouse_pose);
 }
 
 void MainWindow::reset()
@@ -82,22 +82,21 @@ void MainWindow::reset()
     const int start_pose_y = ui->spbStartPoseY->value();
     const int target_pose_x = ui->spbTargetPoseX->value();
     const int target_pose_y = ui->spbTargetPoseY->value();
-    if (!maze_.setRobotPosition(start_pose_x, start_pose_y))
+    if (!maze_puzzle_.setRobotPosition(start_pose_x, start_pose_y))
     {
         ui->statusbar->showMessage(
           QString::fromUtf8("Nieprawidłowa pozycja startowa."));
         return;
     }
-    if (!maze_.setTargetPosition(target_pose_x, target_pose_y))
+    if (!maze_puzzle_.setTargetPosition(target_pose_x, target_pose_y))
     {
         ui->statusbar->showMessage(
           QString::fromUtf8("Nieprawidłowa pozycja celu."));
         return;
     }
-    maze_.restart();
-    const std::pair<int, int> target_pose = maze_.getTargetPosition();
-    const std::pair<int, int> mouse_pose = maze_.getRobotPosition();
-    const std::vector<std::vector<std::pair<bool, bool>>> sketch =
-      maze_.getSketch();
-    drawMaze(target_pose, mouse_pose, sketch);
+    maze_puzzle_.restart();
+    const std::pair<int, int> target_pose = maze_puzzle_.getTargetPosition();
+    const std::pair<int, int> mouse_pose = maze_puzzle_.getRobotPosition();
+    const MazeSketch sketch = maze_puzzle_.getSketch();
+    maze_view_.updateMaze(mouse_pose, target_pose, sketch);
 }

@@ -3,6 +3,7 @@
 #define MAINWINDOW_H
 
 #include "labyrinth.h"
+#include "mazewidget.h"
 #include <QMainWindow>
 #include <QTime>
 
@@ -33,15 +34,13 @@ class MainWindow : public QMainWindow
     void on_pbRestart_clicked();
 
   private:
-    void drawMaze(std::pair<int, int> target_pose,
-                  std::pair<int, int> mouse_pose,
-                  std::vector<std::vector<std::pair<bool, bool>>> sketch);
-    void updateMousePosition(std::pair<int, int>);
+    void drawMouseMove(std::pair<int, int>);
     void reset();
 
     Ui::MainWindow *ui;
     QTimer *timer_;
-    Labyrinth maze_;
+    Labyrinth maze_puzzle_;
+    MazeWidget maze_view_;
 };
 
 #endif  // MAINWINDOW_H
