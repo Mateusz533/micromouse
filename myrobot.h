@@ -10,7 +10,8 @@ class MyRobot : public Robot
 {
   public:
     MyRobot() = delete;
-    MyRobot(const int x, const int y);
+    MyRobot(const int start_x, const int start_y, const int target_x,
+            const int target_y);
     Movement run(const bool wall_left, const bool wall_right,
                  const bool wall_up, const bool wall_down) override;
 
@@ -19,6 +20,8 @@ class MyRobot : public Robot
     std::vector<std::vector<Border>> horizontal_walls_;
     int position_x_;
     int position_y_;
+    const int target_x_;
+    const int target_y_;
 };
 
 #endif  // MYROBOT_H

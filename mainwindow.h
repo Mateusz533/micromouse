@@ -2,7 +2,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "labyrinth.h"
 #include <QMainWindow>
+#include <QTime>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -19,7 +21,7 @@ class MainWindow : public QMainWindow
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
+  private slots:
     void on_pbGenerate_clicked();
 
     void on_pbLoad_clicked();
@@ -30,8 +32,10 @@ private slots:
 
     void on_pbRestart_clicked();
 
-private:
+  private:
     Ui::MainWindow *ui;
+    QTimer *timer_;
+    Labyrinth maze_;
 };
 
 #endif  // MAINWINDOW_H

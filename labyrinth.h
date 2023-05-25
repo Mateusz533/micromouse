@@ -12,13 +12,13 @@ class Labyrinth
   public:
     Labyrinth() = delete;
     Labyrinth(const int size = 16);
-    void getFromFile(const std::string &path);
+    bool getFromFile(const std::string &path);
     void generateRandomSketch();
-    void start();
-    void pause();
+//    void start();
+//    void pause();
     void restart();
-    void setTargetPosition(const int x, const int y);
-    void setRobotPosition(const int x, const int y);
+    bool setTargetPosition(const int x, const int y);
+    bool setRobotPosition(const int x, const int y);
     void step();
 
   private:
@@ -29,6 +29,8 @@ class Labyrinth
     std::unique_ptr<Robot> mouse_;
     int mouse_x_;
     int mouse_y_;
+    int target_x_;
+    int target_y_;
 };
 
 #endif  // LABYRINTH_H
