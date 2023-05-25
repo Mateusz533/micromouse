@@ -33,6 +33,12 @@ class MainWindow : public QMainWindow
     void on_pbRestart_clicked();
 
   private:
+    void drawMaze(std::pair<int, int> target_pose,
+                  std::pair<int, int> mouse_pose,
+                  std::vector<std::vector<std::pair<bool, bool>>> sketch);
+    void updateMousePosition(std::pair<int, int>);
+    void reset();
+
     Ui::MainWindow *ui;
     QTimer *timer_;
     Labyrinth maze_;

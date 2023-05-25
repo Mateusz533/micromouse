@@ -12,7 +12,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     timer_ = new QTimer(this);
     timer_->setInterval(1000);
-    connect(timer_, &QTimer::timeout, this, [this]() { this->maze_.step(); });
+    connect(timer_, &QTimer::timeout, this, [this]() {
+        this->maze_.step();
+        const auto mouse_pose = maze_.getRobotPosition();
+        updateMousePosition(mouse_pose);
+    });
 }
 
 MainWindow::~MainWindow()
@@ -25,6 +29,7 @@ void MainWindow::on_pbGenerate_clicked()
 {
     timer_->stop();
     maze_.generateRandomSketch();
+    reset();
 }
 
 void MainWindow::on_pbLoad_clicked()
@@ -34,10 +39,12 @@ void MainWindow::on_pbLoad_clicked()
       QFileDialog::getOpenFileName(this, tr("Open Maze"), "./",
                                    tr("Text Files (*.txt)"))
         .toStdString();
-    const bool valid = maze_.getFromFile(path);
+    const bool valid = maze_.getSketchFromFile(path);
     if (!valid)
         ui->statusbar->showMessage(
           QString::fromUtf8("Nie można odczytać pliku."));
+    else
+        reset();
 }
 
 void MainWindow::on_pbStart_clicked()
@@ -51,6 +58,25 @@ void MainWindow::on_pbPause_clicked()
 }
 
 void MainWindow::on_pbRestart_clicked()
+{
+    timer_->stop();
+    reset();
+    timer_->start();
+}
+
+void MainWindow::drawMaze(
+  std::pair<int, int> target_pose, std::pair<int, int> mouse_pose,
+  std::vector<std::vector<std::pair<bool, bool>>> sketch)
+{
+    // TODO
+}
+
+void MainWindow::updateMousePosition(std::pair<int, int>)
+{
+    // TODO
+}
+
+void MainWindow::reset()
 {
     const int start_pose_x = ui->spbStartPoseX->value();
     const int start_pose_y = ui->spbStartPoseY->value();
@@ -69,5 +95,9 @@ void MainWindow::on_pbRestart_clicked()
         return;
     }
     maze_.restart();
-    timer_->start();
+    const std::pair<int, int> target_pose = maze_.getTargetPosition();
+    const std::pair<int, int> mouse_pose = maze_.getRobotPosition();
+    const std::vector<std::vector<std::pair<bool, bool>>> sketch =
+      maze_.getSketch();
+    drawMaze(target_pose, mouse_pose, sketch);
 }

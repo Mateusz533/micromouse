@@ -7,7 +7,6 @@
 class Robot
 {
   public:
-    Robot() = delete;
     virtual Movement run(const bool wall_left, const bool wall_right,
                          const bool wall_up, const bool wall_down) = 0;
 };
