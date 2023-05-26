@@ -125,23 +125,25 @@ void Labyrinth::step()
 
 void Labyrinth::moveMouse(Movement movement)
 {
-    // TODO: sprawdzanie, czy nie wpada na ściany
     switch (movement)
     {
     case Movement::Left:
-
+        if (!sketch_.getVerticalWall(mouse_x_ - 1, mouse_y_))
+            --mouse_x_;
         break;
     case Movement::Right:
-
+        if (!sketch_.getVerticalWall(mouse_x_, mouse_y_))
+            ++mouse_x_;
         break;
     case Movement::Up:
-
+        if (!sketch_.getHorizontalWall(mouse_x_, mouse_y_ - 1))
+            --mouse_y_;
         break;
     case Movement::Down:
-
+        if (!sketch_.getHorizontalWall(mouse_x_, mouse_y_))
+            ++mouse_y_;
         break;
     case Movement::None:
-
         break;
     }
 }

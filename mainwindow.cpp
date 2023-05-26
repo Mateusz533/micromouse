@@ -5,6 +5,8 @@
 #include <QPainter>
 #include <QTimer>
 
+const int STEP_TIME_INTERVAL_MS = 200;
+
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
@@ -13,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     timer_ = new QTimer(this);
-    timer_->setInterval(1000);
+    timer_->setInterval(STEP_TIME_INTERVAL_MS);
     connect(timer_, &QTimer::timeout, this, [this]() {
         this->maze_puzzle_.step();
         const auto mouse_pose = maze_puzzle_.getRobotPosition();
@@ -59,11 +61,10 @@ void MainWindow::on_pbPause_clicked()
     timer_->stop();
 }
 
-void MainWindow::on_pbRestart_clicked()
+void MainWindow::on_pbReset_clicked()
 {
     timer_->stop();
     reset();
-    timer_->start();
 }
 
 void MainWindow::drawMouseMove(std::pair<int, int>)
