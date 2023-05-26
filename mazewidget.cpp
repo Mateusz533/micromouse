@@ -35,15 +35,17 @@ void MazeWidget::paintEvent(QPaintEvent *e)
 
 void MazeWidget::drawMaze(QPainter *painter)
 {
-    const int frame_size = 480;
+    const int frame_size = this->size().height();
     const int maze_size = sketch_.size();
-    const double line_length = 1.0 * frame_size / maze_size;
+    const int line_length = std::round(1.0 * frame_size / maze_size);
 
-    QPen pen(Qt::black, 1, Qt::SolidLine);
+    QPen pen(Qt::black, 3, Qt::SolidLine);
     painter->setPen(pen);
     QBrush background = QBrush(QColor(255, 255, 255));
-    painter->fillRect(0, 1, frame_size, frame_size - 1, background);
-    painter->drawRect(0, 1, frame_size, frame_size - 1);
+    painter->fillRect(0, 0, frame_size, frame_size, background);
+    painter->drawRect(1, 1, frame_size - 2, frame_size - 2);
+    pen = QPen(Qt::black, 2, Qt::SolidLine);
+    painter->setPen(pen);
 
     for (int i = 0; i < maze_size - 1; ++i)
     {

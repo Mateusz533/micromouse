@@ -34,7 +34,7 @@ template <typename T, T DEFAULT_VALUE>
 T MazeSketch<T, DEFAULT_VALUE>::getVerticalWall(const int index_x,
                                                 const int index_y) const
 {
-    const int size = vertical_walls_.size();
+    const int size = horizontal_walls_.size();
     const bool out_of_scope =
       index_x < 0 || index_x >= size - 1 || index_y < 0 || index_y >= size;
     return out_of_scope ? DEFAULT_VALUE : vertical_walls_[index_x][index_y];
@@ -44,7 +44,7 @@ template <typename T, T DEFAULT_VALUE>
 T MazeSketch<T, DEFAULT_VALUE>::getHorizontalWall(const int index_x,
                                                   const int index_y) const
 {
-    const int size = vertical_walls_.size();
+    const int size = horizontal_walls_.size();
     const bool out_of_scope =
       index_x < 0 || index_x >= size || index_y < 0 || index_y >= size - 1;
     return out_of_scope ? DEFAULT_VALUE : horizontal_walls_[index_x][index_y];
@@ -55,7 +55,7 @@ void MazeSketch<T, DEFAULT_VALUE>::setVerticalWall(const int index_x,
                                                    const int index_y,
                                                    const T value)
 {
-    const int size = vertical_walls_.size();
+    const int size = horizontal_walls_.size();
     if (index_x < 0 || index_x >= size - 1 || index_y < 0 || index_y >= size)
         return;
     vertical_walls_[index_x][index_y] = value;
@@ -66,7 +66,7 @@ void MazeSketch<T, DEFAULT_VALUE>::setHorizontalWall(const int index_x,
                                                      const int index_y,
                                                      const T value)
 {
-    const int size = vertical_walls_.size();
+    const int size = horizontal_walls_.size();
     if (index_x < 0 || index_x >= size || index_y < 0 || index_y >= size - 1)
         return;
     horizontal_walls_[index_x][index_y] = value;
@@ -75,7 +75,9 @@ void MazeSketch<T, DEFAULT_VALUE>::setHorizontalWall(const int index_x,
 template <typename T, T DEFAULT_VALUE>
 int MazeSketch<T, DEFAULT_VALUE>::size() const
 {
-    return vertical_walls_.size();
+    const int h = horizontal_walls_.size();
+    const int v = vertical_walls_.size();
+    return v > h ? v : h;
 }
 
 #endif  // MAZESKETCH_H

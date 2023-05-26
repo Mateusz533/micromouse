@@ -12,10 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QHBoxLayout *hbox = new QHBoxLayout();
-    ui->frMaze->setLayout(hbox);
-    hbox->addWidget(&maze_view_);
-
     timer_ = new QTimer(this);
     timer_->setInterval(1000);
     connect(timer_, &QTimer::timeout, this, [this]() {
@@ -73,7 +69,7 @@ void MainWindow::on_pbRestart_clicked()
 void MainWindow::drawMouseMove(std::pair<int, int>)
 {
     const std::pair<int, int> mouse_pose = maze_puzzle_.getRobotPosition();
-    maze_view_.updateMousePosition(mouse_pose);
+    ui->wdgMaze->updateMousePosition(mouse_pose);
 }
 
 void MainWindow::reset()
@@ -98,5 +94,5 @@ void MainWindow::reset()
     const std::pair<int, int> target_pose = maze_puzzle_.getTargetPosition();
     const std::pair<int, int> mouse_pose = maze_puzzle_.getRobotPosition();
     const MazeSketch sketch = maze_puzzle_.getSketch();
-    maze_view_.updateMaze(mouse_pose, target_pose, sketch);
+    ui->wdgMaze->updateMaze(mouse_pose, target_pose, sketch);
 }

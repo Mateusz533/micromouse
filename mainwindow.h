@@ -3,7 +3,6 @@
 #define MAINWINDOW_H
 
 #include "labyrinth.h"
-#include "mazewidget.h"
 #include <QMainWindow>
 #include <QTime>
 
@@ -40,7 +39,6 @@ class MainWindow : public QMainWindow
     Ui::MainWindow *ui;
     QTimer *timer_;
     Labyrinth maze_puzzle_;
-    MazeWidget maze_view_;
 };
 
 #endif  // MAINWINDOW_H

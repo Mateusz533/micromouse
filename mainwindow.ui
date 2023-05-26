@@ -339,26 +339,20 @@
      </item>
     </layout>
    </widget>
-   <widget class="QFrame" name="frMaze">
+   <widget class="MazeWidget" name="wdgMaze" native="true">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>280</x>
       <y>20</y>
-      <width>500</width>
-      <height>500</height>
+      <width>480</width>
+      <height>480</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>500</width>
-      <height>500</height>
+      <width>480</width>
+      <height>480</height>
      </size>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
     </property>
    </widget>
   </widget>
@@ -374,6 +368,14 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MazeWidget</class>
+   <extends>QWidget</extends>
+   <header>mazewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

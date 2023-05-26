@@ -1,6 +1,7 @@
 
 #include "labyrinth.h"
 #include "myrobot.h"
+#include <fstream>
 
 Labyrinth::Labyrinth(const int size)
   : sketch_(size)
@@ -10,8 +11,58 @@ Labyrinth::Labyrinth(const int size)
 
 bool Labyrinth::getSketchFromFile(const std::string &path)
 {
-    // TODO: dodanie pobierania danych z pliku
-    return false;
+    std::ifstream stream;
+    stream.open(path, std::ios::binary);
+    stream.unsetf(std::ios_base::skipws);
+    if (!stream.is_open())
+        return false;
+
+    const int size = sketch_.size();
+    MazeSketch<bool, true> new_sketch(size, false);
+    for (int i = 0; i < size; ++i)
+    {
+        for (int j = 0; j < size; ++j)
+        {
+            char sign;
+            stream >> sign;
+            if (sign == '\r')
+                stream >> sign;
+            if (sign == '\n' || sign == std::char_traits<char>::eof())
+                break;
+            switch (sign)
+            {
+            case ' ':
+                break;
+            case '_':
+                new_sketch.setHorizontalWall(j, i, true);
+                break;
+            default:
+                stream.close();
+                return false;
+            }
+
+            stream >> sign;
+            if (sign == '\r')
+                stream >> sign;
+            if (sign == '\n' || sign == std::char_traits<char>::eof())
+                break;
+            switch (sign)
+            {
+            case ' ':
+                break;
+            case '|':
+                new_sketch.setVerticalWall(j, i, true);
+                break;
+            default:
+                stream.close();
+                return false;
+            }
+        }
+    }
+
+    stream.close();
+    sketch_ = new_sketch;
+    return true;
 }
 
 void Labyrinth::generateRandomSketch()
