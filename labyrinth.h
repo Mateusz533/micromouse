@@ -24,6 +24,10 @@ class Labyrinth
     void step();
 
   private:
+    void generateMainPath(MazeSketch<bool, true> &sketch,
+                          std::vector<std::vector<bool>> &visited);
+    void generateMissingPaths(MazeSketch<bool, true> &sketch,
+                              std::vector<std::vector<bool>> &visited);
     void moveMouse(Movement movement);
 
     MazeSketch<bool, true> sketch_;
