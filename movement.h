@@ -4,11 +4,11 @@
 
 enum class Movement
 {
+    None,
     Left,
     Right,
     Up,
     Down,
-    None,
 };
 
 #endif  // MOVEMENT_H

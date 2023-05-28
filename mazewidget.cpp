@@ -7,10 +7,12 @@ MazeWidget::MazeWidget(QWidget *parent)
   : QWidget{ parent }
   , sketch_{ 16 }
 {
+    mouse_img_.load("../micromouse/img/mouse_scaled.png");
+    target_img_.load("../micromouse/img/racing_flag_scaled.png");
+    prize_img_.load("../micromouse/img/prize_scaled.png");
 }
 
-void MazeWidget::updateMaze(std::pair<int, int> mouse_pose,
-                            std::pair<int, int> target_pose,
+void MazeWidget::updateMaze(Field mouse_pose, Field target_pose,
                             MazeSketch<bool, true> sketch)
 {
     mouse_pose_ = mouse_pose;
@@ -19,7 +21,7 @@ void MazeWidget::updateMaze(std::pair<int, int> mouse_pose,
     update();
 }
 
-void MazeWidget::updateMousePosition(std::pair<int, int> mouse_pose)
+void MazeWidget::updateMousePosition(Field mouse_pose)
 {
     mouse_pose_ = mouse_pose;
     update();
@@ -61,17 +63,19 @@ void MazeWidget::drawMaze(QPainter *painter)
         }
     }
 
-    QPointF mouse_pose = QPointF(line_length * (mouse_pose_.first + 0.5),
-                                 line_length * (mouse_pose_.second + 0.5));
-    const double mouse_r = line_length / 4;
-    QPainterPath mouse_path;
-    mouse_path.addEllipse(mouse_pose, mouse_r, mouse_r);
-    painter->fillPath(mouse_path, QBrush(Qt::green));
+    if (target_pose_ != mouse_pose_)
+    {
+        drawCenteredImage(painter, mouse_img_, mouse_pose_, line_length);
+        drawCenteredImage(painter, target_img_, target_pose_, line_length);
+    }
+    else
+        drawCenteredImage(painter, prize_img_, mouse_pose_, line_length);
+}
 
-    QPoint target_pose = QPoint(line_length * (target_pose_.first + 0.5),
-                                line_length * (target_pose_.second + 0.5));
-    const double target_r = line_length / 4;
-    QPainterPath target_path;
-    target_path.addEllipse(target_pose, target_r, target_r);
-    painter->fillPath(target_path, QBrush(Qt::red));
+void MazeWidget::drawCenteredImage(QPainter *painter, QImage &img, Field field,
+                                   const int frame_size)
+{
+    const int x = (frame_size - img.width()) / 2;
+    const int y = (frame_size - img.height()) / 2;
+    painter->drawImage(frame_size * field.x + x, frame_size * field.y + y, img);
 }

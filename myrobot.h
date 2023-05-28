@@ -3,6 +3,7 @@
 #define MYROBOT_H
 
 #include "border.h"
+#include "field.h"
 #include "mazesketch.h"
 #include "robot.h"
 #include <queue>
@@ -14,6 +15,7 @@ class MyRobot : public Robot
     MyRobot() = delete;
     MyRobot(const int start_x, const int start_y, const int target_x,
             const int target_y, const int maze_size);
+    MyRobot(const Field start, const Field target, const int maze_size);
     Movement run(const bool wall_left, const bool wall_right,
                  const bool wall_up, const bool wall_down) override;
 
@@ -21,16 +23,13 @@ class MyRobot : public Robot
     void updateBorderWalls(const bool left, const bool right, const bool up,
                            const bool down);
     Movement getFloodMovement();
-    std::vector<std::vector<Movement>> getDijkstraPaths();
+    std::vector<std::vector<Movement>> getDijkstraPaths() const;
     bool updatePath();
-    bool isMovePossible(Movement move, int x = -1, int y = -1);
-    void updatePosition(Movement move);
+    bool isMovePossible(const Movement move, const Field from) const;
 
     MazeSketch<Border, Border::Walled> predicted_sketch_;
-    int position_x_;
-    int position_y_;
-    const int target_x_;
-    const int target_y_;
+    Field position_;
+    const Field target_;
     std::queue<Movement> predicted_path_;
 };
 

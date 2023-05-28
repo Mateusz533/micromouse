@@ -18,8 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     timer_->setInterval(STEP_TIME_INTERVAL_MS);
     connect(timer_, &QTimer::timeout, this, [this]() {
         this->maze_puzzle_.step();
-        const auto mouse_pose = maze_puzzle_.getRobotPosition();
-        drawMouseMove(mouse_pose);
+        drawMouseMove();
     });
 }
 
@@ -67,33 +66,33 @@ void MainWindow::on_pbReset_clicked()
     reset();
 }
 
-void MainWindow::drawMouseMove(std::pair<int, int>)
+void MainWindow::drawMouseMove()
 {
-    const std::pair<int, int> mouse_pose = maze_puzzle_.getRobotPosition();
-    ui->wdgMaze->updateMousePosition(mouse_pose);
+    const Field mouse_position = maze_puzzle_.getRobotPosition();
+    ui->wdgMaze->updateMousePosition(mouse_position);
 }
 
 void MainWindow::reset()
 {
-    const int start_pose_x = ui->spbStartPoseX->value();
-    const int start_pose_y = ui->spbStartPoseY->value();
-    const int target_pose_x = ui->spbTargetPoseX->value();
-    const int target_pose_y = ui->spbTargetPoseY->value();
-    if (!maze_puzzle_.setRobotPosition(start_pose_x, start_pose_y))
+    const Field mouse_position{ ui->spbStartPoseX->value(),
+                                ui->spbStartPoseY->value() };
+    const Field target_position{ ui->spbTargetPoseX->value(),
+                                 ui->spbTargetPoseY->value() };
+
+    if (!maze_puzzle_.setRobotPosition(mouse_position))
     {
         ui->statusbar->showMessage(
           QString::fromUtf8("Nieprawidłowa pozycja startowa."));
         return;
     }
-    if (!maze_puzzle_.setTargetPosition(target_pose_x, target_pose_y))
+    if (!maze_puzzle_.setTargetPosition(target_position))
     {
         ui->statusbar->showMessage(
           QString::fromUtf8("Nieprawidłowa pozycja celu."));
         return;
     }
+
     maze_puzzle_.restart();
-    const std::pair<int, int> target_pose = maze_puzzle_.getTargetPosition();
-    const std::pair<int, int> mouse_pose = maze_puzzle_.getRobotPosition();
     const MazeSketch sketch = maze_puzzle_.getSketch();
-    ui->wdgMaze->updateMaze(mouse_pose, target_pose, sketch);
+    ui->wdgMaze->updateMaze(mouse_position, target_position, sketch);
 }

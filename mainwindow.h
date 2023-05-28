@@ -33,7 +33,7 @@ class MainWindow : public QMainWindow
     void on_pbReset_clicked();
 
   private:
-    void drawMouseMove(std::pair<int, int>);
+    void drawMouseMove();
     void reset();
 
     Ui::MainWindow *ui;

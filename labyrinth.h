@@ -2,8 +2,10 @@
 #ifndef LABYRINTH_H
 #define LABYRINTH_H
 
+#include "field.h"
 #include "mazesketch.h"
 #include "robot.h"
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
@@ -17,25 +19,28 @@ class Labyrinth
     void generateRandomSketch();
     void restart();
     bool setTargetPosition(const int x, const int y);
+    bool setTargetPosition(const Field position);
     bool setRobotPosition(const int x, const int y);
-    std::pair<int, int> getTargetPosition() const;
-    std::pair<int, int> getRobotPosition() const;
+    bool setRobotPosition(const Field position);
+    Field getTargetPosition() const;
+    Field getRobotPosition() const;
     MazeSketch<bool, true> getSketch() const;
     void step();
 
   private:
-    void generateMainPath(MazeSketch<bool, true> &sketch,
-                          std::vector<std::vector<bool>> &visited);
-    void generateMissingPaths(MazeSketch<bool, true> &sketch,
-                              std::vector<std::vector<bool>> &visited);
-    void moveMouse(Movement movement);
+    typedef MazeSketch<bool, true> Sketch;
+    typedef std::vector<std::vector<bool>> Matrix;
 
-    MazeSketch<bool, true> sketch_;
+    void generateMainPath(Sketch &sketch, Matrix &visited);
+    void generateMissingPaths(Sketch &sketch, Matrix &visited);
+    void generatePath(Sketch &sketch, Matrix &visited, const Field start_field,
+                      std::function<bool(Field)> stop_cond);
+    void moveMouse(const Movement movement);
+
+    Sketch sketch_;
     std::unique_ptr<Robot> mouse_;
-    int mouse_x_{ 0 };
-    int mouse_y_{ 0 };
-    int target_x_{ 8 };
-    int target_y_{ 8 };
+    Field mouse_position_{ 0, 0 };
+    Field target_position_{ 8, 7 };
 };
 
 #endif  // LABYRINTH_H

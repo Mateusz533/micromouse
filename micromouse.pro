@@ -17,6 +17,7 @@ SOURCES += \
 
 HEADERS += \
     border.h \
+    field.h \
     labyrinth.h \
     mainwindow.h \
     mazesketch.h \
