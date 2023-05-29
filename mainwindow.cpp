@@ -8,9 +8,9 @@
 const int STEP_TIME_INTERVAL_MS = 200;
 
 MainWindow::MainWindow(QWidget *parent)
-  : QMainWindow(parent)
-  , ui(new Ui::MainWindow)
-  , maze_puzzle_(16)
+  : QMainWindow{ parent }
+  , ui{ new Ui::MainWindow }
+  , maze_puzzle_{ 16 }
 {
     ui->setupUi(this);
 
@@ -38,11 +38,12 @@ void MainWindow::on_pbGenerate_clicked()
 void MainWindow::on_pbLoad_clicked()
 {
     timer_->stop();
-    const std::string path =
-      QFileDialog::getOpenFileName(this, tr("Open Maze"), "./",
-                                   tr("Text Files (*.txt)"))
-        .toStdString();
-    const bool valid = maze_puzzle_.getSketchFromFile(path);
+    const std::string path{ QFileDialog::getOpenFileName(
+                              this, tr("Open Maze"), "./",
+                              tr("Text Files (*.txt)"))
+                              .toStdString() };
+    const bool valid{ maze_puzzle_.getSketchFromFile(path) };
+
     if (!valid)
         ui->statusbar->showMessage(
           QString::fromUtf8("Nie można odczytać pliku."));
@@ -68,7 +69,7 @@ void MainWindow::on_pbReset_clicked()
 
 void MainWindow::drawMouseMove()
 {
-    const Field mouse_position = maze_puzzle_.getRobotPosition();
+    const Field mouse_position{ maze_puzzle_.getRobotPosition() };
     ui->wdgMaze->updateMousePosition(mouse_position);
 }
 
@@ -92,7 +93,9 @@ void MainWindow::reset()
         return;
     }
 
+    ui->statusbar->clearMessage();
+
     maze_puzzle_.restart();
-    const MazeSketch sketch = maze_puzzle_.getSketch();
+    const MazeSketch sketch{ maze_puzzle_.getSketch() };
     ui->wdgMaze->updateMaze(mouse_position, target_position, sketch);
 }

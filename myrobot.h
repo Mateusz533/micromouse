@@ -15,7 +15,7 @@ class MyRobot : public Robot
     MyRobot() = delete;
     MyRobot(const int start_x, const int start_y, const int target_x,
             const int target_y, const int maze_size);
-    MyRobot(const Field start, const Field target, const int maze_size);
+    MyRobot(const Field &start, const Field &target, const int maze_size);
     Movement run(const bool wall_left, const bool wall_right,
                  const bool wall_up, const bool wall_down) override;
 
@@ -25,11 +25,11 @@ class MyRobot : public Robot
     Movement getFloodMovement();
     std::vector<std::vector<Movement>> getDijkstraPaths() const;
     bool updatePath();
-    bool isMovePossible(const Movement move, const Field from) const;
+    bool isMovePossible(const Movement move, const Field &from) const;
 
-    MazeSketch<Border, Border::Walled> predicted_sketch_;
-    Field position_;
     const Field target_;
+    Field position_;
+    MazeSketch<Border, Border::Walled> predicted_sketch_;
     std::queue<Movement> predicted_path_;
 };
 

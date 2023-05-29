@@ -12,8 +12,8 @@ MazeWidget::MazeWidget(QWidget *parent)
     prize_img_.load("../micromouse/img/prize_scaled.png");
 }
 
-void MazeWidget::updateMaze(Field mouse_pose, Field target_pose,
-                            MazeSketch<bool, true> sketch)
+void MazeWidget::updateMaze(const Field &mouse_pose, const Field &target_pose,
+                            const MazeSketch<bool, true> &sketch)
 {
     mouse_pose_ = mouse_pose;
     target_pose_ = target_pose;
@@ -21,7 +21,7 @@ void MazeWidget::updateMaze(Field mouse_pose, Field target_pose,
     update();
 }
 
-void MazeWidget::updateMousePosition(Field mouse_pose)
+void MazeWidget::updateMousePosition(const Field &mouse_pose)
 {
     mouse_pose_ = mouse_pose;
     update();
@@ -37,9 +37,10 @@ void MazeWidget::paintEvent(QPaintEvent *e)
 
 void MazeWidget::drawMaze(QPainter *painter)
 {
-    const int frame_size = this->size().height();
-    const int maze_size = sketch_.size();
-    const int line_length = std::round(1.0 * frame_size / maze_size);
+    const int frame_size{ this->size().height() };
+    const int maze_size{ sketch_.size() };
+    const int line_length{ static_cast<int>(
+      std::round(1.0 * frame_size / maze_size)) };
 
     QPen pen(Qt::black, 3, Qt::SolidLine);
     painter->setPen(pen);
@@ -72,8 +73,8 @@ void MazeWidget::drawMaze(QPainter *painter)
         drawCenteredImage(painter, prize_img_, mouse_pose_, line_length);
 }
 
-void MazeWidget::drawCenteredImage(QPainter *painter, QImage &img, Field field,
-                                   const int frame_size)
+void MazeWidget::drawCenteredImage(QPainter *painter, QImage &img,
+                                   const Field &field, const int frame_size)
 {
     const int x = (frame_size - img.width()) / 2;
     const int y = (frame_size - img.height()) / 2;

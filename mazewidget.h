@@ -11,16 +11,16 @@ class MazeWidget : public QWidget
     Q_OBJECT
   public:
     explicit MazeWidget(QWidget *parent = nullptr);
-    void updateMaze(Field mouse_pose, Field target_pose,
-                    MazeSketch<bool, true> sketch);
-    void updateMousePosition(Field mouse_pose);
+    void updateMaze(const Field &mouse_pose, const Field &target_pose,
+                    const MazeSketch<bool, true> &sketch);
+    void updateMousePosition(const Field &mouse_pose);
 
   protected:
     void paintEvent(QPaintEvent *event) override;
 
   private:
     void drawMaze(QPainter *painter);
-    void drawCenteredImage(QPainter *painter, QImage &img, Field field,
+    void drawCenteredImage(QPainter *painter, QImage &img, const Field &field,
                            const int frame_size);
 
     Field mouse_pose_{ 0, 0 };
