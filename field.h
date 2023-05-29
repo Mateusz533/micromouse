@@ -22,7 +22,7 @@ struct Field
         return x != right.x ? x < right.x : y < right.y;
     };
 
-    Field positionAfterMove(const Movement move)
+    Field positionAfterMove(const Movement move) const
     {
         switch (move)
         {
@@ -38,7 +38,7 @@ struct Field
             return Field{ *this };
         }
     }
-    Field positionBeforeMove(const Movement move)
+    Field positionBeforeMove(const Movement move) const
     {
         switch (move)
         {

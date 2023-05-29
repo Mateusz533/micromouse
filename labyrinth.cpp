@@ -6,8 +6,8 @@
 #include <stack>
 
 Labyrinth::Labyrinth(const int size)
-  : sketch_{ size }
-  , mouse_{ new MyRobot(0, 0, size / 2, size / 2, size) }
+  : _sketch{ size }
+  , p_robot_new{ new MyRobot(0, 0, size / 2, size / 2, size) }
 {
     std::srand(time(0));
 }
@@ -20,7 +20,7 @@ bool Labyrinth::getSketchFromFile(const std::string &path)
     if (!stream.is_open())
         return false;
 
-    const int size{ sketch_.size() };
+    const int size{ _sketch.size() };
     Sketch new_sketch(size, false);
     for (int i = 0; i < size; ++i)
     {
@@ -64,25 +64,25 @@ bool Labyrinth::getSketchFromFile(const std::string &path)
     }
 
     stream.close();
-    sketch_ = new_sketch;
+    _sketch = new_sketch;
     return true;
 }
 
 void Labyrinth::generateRandomSketch()
 {
-    const int size{ sketch_.size() };
+    const int size{ _sketch.size() };
     Sketch new_sketch(size, true);
     Matrix visited(size, std::vector<bool>(size, false));
 
     generateMainPath(new_sketch, visited);
     generateMissingPaths(new_sketch, visited);
-    sketch_ = new_sketch;
+    _sketch = new_sketch;
 }
 
 void Labyrinth::generateMainPath(Sketch &sketch, Matrix &visited)
 {
-    generatePath(sketch, visited, mouse_position_, [this](auto current_field) {
-        return current_field == this->target_position_;
+    generatePath(sketch, visited, _robot_position, [this](auto current_field) {
+        return current_field == this->_target_position;
     });
 }
 
@@ -158,8 +158,8 @@ void Labyrinth::generatePath(Sketch &sketch, Matrix &visited,
 
 void Labyrinth::restart()
 {
-    const int size{ sketch_.size() };
-    mouse_.reset(new MyRobot(mouse_position_, target_position_, size));
+    const int size{ _sketch.size() };
+    p_robot_new.reset(new MyRobot(_robot_position, _target_position, size));
 }
 
 bool Labyrinth::setTargetPosition(const int x, const int y)
@@ -168,10 +168,10 @@ bool Labyrinth::setTargetPosition(const int x, const int y)
 }
 bool Labyrinth::setTargetPosition(const Field &position)
 {
-    if (!sketch_.isInside(position))
+    if (!_sketch.isInside(position))
         return false;
 
-    target_position_ = position;
+    _target_position = position;
     return true;
 }
 
@@ -181,36 +181,36 @@ bool Labyrinth::setRobotPosition(const int x, const int y)
 }
 bool Labyrinth::setRobotPosition(const Field &position)
 {
-    if (!sketch_.isInside(position))
+    if (!_sketch.isInside(position))
         return false;
 
-    mouse_position_ = position;
+    _robot_position = position;
     return true;
 }
 
 Field Labyrinth::getTargetPosition() const
 {
-    return target_position_;
+    return _target_position;
 }
 
 Field Labyrinth::getRobotPosition() const
 {
-    return mouse_position_;
+    return _robot_position;
 }
 
 MazeSketch<bool, true> Labyrinth::getSketch() const
 {
-    return sketch_;
+    return _sketch;
 }
 
 void Labyrinth::step()
 {
-    const bool left{ sketch_.getWall(mouse_position_, Movement::Left) };
-    const bool right{ sketch_.getWall(mouse_position_, Movement::Right) };
-    const bool up{ sketch_.getWall(mouse_position_, Movement::Up) };
-    const bool down{ sketch_.getWall(mouse_position_, Movement::Down) };
-    const Movement movement = mouse_->run(left, right, up, down);
+    const bool left{ _sketch.getWall(_robot_position, Movement::Left) };
+    const bool right{ _sketch.getWall(_robot_position, Movement::Right) };
+    const bool up{ _sketch.getWall(_robot_position, Movement::Up) };
+    const bool down{ _sketch.getWall(_robot_position, Movement::Down) };
+    const Movement movement = p_robot_new->run(left, right, up, down);
 
-    if (!sketch_.getWall(mouse_position_, movement))
-        mouse_position_ = mouse_position_.positionAfterMove(movement);
+    if (!_sketch.getWall(_robot_position, movement))
+        _robot_position = _robot_position.positionAfterMove(movement);
 }

@@ -10,14 +10,14 @@ const int STEP_TIME_INTERVAL_MS = 200;
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow{ parent }
   , ui{ new Ui::MainWindow }
-  , maze_puzzle_{ 16 }
+  , _maze_puzzle{ 16 }
 {
     ui->setupUi(this);
 
-    timer_ = new QTimer(this);
-    timer_->setInterval(STEP_TIME_INTERVAL_MS);
-    connect(timer_, &QTimer::timeout, this, [this]() {
-        this->maze_puzzle_.step();
+    p_timer = new QTimer(this);
+    p_timer->setInterval(STEP_TIME_INTERVAL_MS);
+    connect(p_timer, &QTimer::timeout, this, [this]() {
+        this->_maze_puzzle.step();
         drawMouseMove();
     });
 }
@@ -25,24 +25,24 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete timer_;
+    delete p_timer;
 }
 
 void MainWindow::on_pbGenerate_clicked()
 {
-    timer_->stop();
-    maze_puzzle_.generateRandomSketch();
+    p_timer->stop();
+    _maze_puzzle.generateRandomSketch();
     reset();
 }
 
 void MainWindow::on_pbLoad_clicked()
 {
-    timer_->stop();
+    p_timer->stop();
     const std::string path{ QFileDialog::getOpenFileName(
                               this, tr("Open Maze"), "./",
                               tr("Text Files (*.txt)"))
                               .toStdString() };
-    const bool valid{ maze_puzzle_.getSketchFromFile(path) };
+    const bool valid{ _maze_puzzle.getSketchFromFile(path) };
 
     if (!valid)
         ui->statusbar->showMessage(
@@ -53,23 +53,23 @@ void MainWindow::on_pbLoad_clicked()
 
 void MainWindow::on_pbStart_clicked()
 {
-    timer_->start();
+    p_timer->start();
 }
 
 void MainWindow::on_pbPause_clicked()
 {
-    timer_->stop();
+    p_timer->stop();
 }
 
 void MainWindow::on_pbReset_clicked()
 {
-    timer_->stop();
+    p_timer->stop();
     reset();
 }
 
 void MainWindow::drawMouseMove()
 {
-    const Field mouse_position{ maze_puzzle_.getRobotPosition() };
+    const Field mouse_position{ _maze_puzzle.getRobotPosition() };
     ui->wdgMaze->updateMousePosition(mouse_position);
 }
 
@@ -80,13 +80,13 @@ void MainWindow::reset()
     const Field target_position{ ui->spbTargetPoseX->value(),
                                  ui->spbTargetPoseY->value() };
 
-    if (!maze_puzzle_.setRobotPosition(mouse_position))
+    if (!_maze_puzzle.setRobotPosition(mouse_position))
     {
         ui->statusbar->showMessage(
           QString::fromUtf8("Nieprawidłowa pozycja startowa."));
         return;
     }
-    if (!maze_puzzle_.setTargetPosition(target_position))
+    if (!_maze_puzzle.setTargetPosition(target_position))
     {
         ui->statusbar->showMessage(
           QString::fromUtf8("Nieprawidłowa pozycja celu."));
@@ -95,7 +95,7 @@ void MainWindow::reset()
 
     ui->statusbar->clearMessage();
 
-    maze_puzzle_.restart();
-    const MazeSketch sketch{ maze_puzzle_.getSketch() };
+    _maze_puzzle.restart();
+    const MazeSketch sketch{ _maze_puzzle.getSketch() };
     ui->wdgMaze->updateMaze(mouse_position, target_position, sketch);
 }

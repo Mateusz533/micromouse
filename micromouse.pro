@@ -16,7 +16,6 @@ SOURCES += \
     myrobot.cpp
 
 HEADERS += \
-    border.h \
     field.h \
     labyrinth.h \
     mainwindow.h \

@@ -36,10 +36,10 @@ class Labyrinth
     void generatePath(Sketch &sketch, Matrix &visited, const Field &start_field,
                       std::function<bool(Field)> stop_cond);
 
-    Sketch sketch_;
-    std::unique_ptr<Robot> mouse_;
-    Field mouse_position_{ 0, 0 };
-    Field target_position_{ 7, 7 };
+    Sketch _sketch;
+    std::unique_ptr<Robot> p_robot_new;
+    Field _robot_position{ 0, 0 };
+    Field _target_position{ 7, 7 };
 };
 
 #endif  // LABYRINTH_H

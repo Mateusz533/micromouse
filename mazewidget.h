@@ -23,12 +23,12 @@ class MazeWidget : public QWidget
     void drawCenteredImage(QPainter *painter, QImage &img, const Field &field,
                            const int frame_size);
 
-    Field mouse_pose_{ 0, 0 };
-    Field target_pose_{ 7, 7 };
-    MazeSketch<bool, true> sketch_;
-    QImage mouse_img_;
-    QImage target_img_;
-    QImage prize_img_;
+    Field _mouse_position{ 0, 0 };
+    Field _target_position{ 7, 7 };
+    MazeSketch<bool, true> _sketch;
+    QImage _mouse_img;
+    QImage _target_img;
+    QImage _prize_img;
 };
 
 #endif  // MAZEWIDGET_H

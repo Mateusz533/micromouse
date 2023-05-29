@@ -37,8 +37,8 @@ class MainWindow : public QMainWindow
     void reset();
 
     Ui::MainWindow *ui;
-    QTimer *timer_;
-    Labyrinth maze_puzzle_;
+    QTimer *p_timer;
+    Labyrinth _maze_puzzle;
 };
 
 #endif  // MAINWINDOW_H
