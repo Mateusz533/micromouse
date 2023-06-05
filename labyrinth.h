@@ -1,7 +1,6 @@
 #ifndef LABYRINTH_H
 #define LABYRINTH_H
 
-#include "field.h"
 #include "mazegenerator.h"
 #include "mazesketch.h"
 #include "robot.h"
@@ -19,7 +18,7 @@ class Labyrinth
     Labyrinth() = delete;
     Labyrinth(const int size = 16);
     /// \return poprawność wyczytania szkicu
-    bool getSketchFromFile(const std::string &path);
+    bool readSketchFromFile(const std::string &path);
     void generateRandomSketch();
     void restart();
     /**

@@ -41,7 +41,7 @@ void MainWindow::on_pbLoad_clicked()
                               this, tr("Open Maze"), "./",
                               tr("Text Files (*.txt)"))
                               .toStdString() };
-    const bool valid{ _maze_puzzle.getSketchFromFile(path) };
+    const bool valid{ _maze_puzzle.readSketchFromFile(path) };
 
     if (!valid)
         ui->statusbar->showMessage(

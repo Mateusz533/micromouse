@@ -3,7 +3,9 @@
 
 #include "field.h"
 #include "mazesketch.h"
+#include "movementgenerator.h"
 #include "robot.h"
+#include <memory>
 #include <queue>
 #include <vector>
 
@@ -29,17 +31,12 @@ class MyRobot : public Robot
         Unknown,
     };
 
-    void updateBorderWalls(const bool left, const bool right, const bool up,
-                           const bool down);
-    Movement getFloodMovement();
-    bool updatePath();
-    std::vector<std::vector<Movement>> getDijkstraPaths() const;
-    bool isMovePossible(const Movement move, const Field &from) const;
+    inline void updateBorderWalls(const Field &position, const bool &left,
+                                  const bool &right, const bool &up,
+                                  const bool &down);
 
-    const Field _target;
-    Field _position;
     MazeSketch<Border, Border::Walled> _predicted_sketch;
-    std::queue<Movement> _predicted_path;
+    std::unique_ptr<MovementGenerator> p_generator;
 };
 
 #endif  // MYROBOT_H

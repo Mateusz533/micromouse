@@ -11,7 +11,7 @@ Labyrinth::Labyrinth(const int size)
     std::srand(time(0));
 }
 
-bool Labyrinth::getSketchFromFile(const std::string &path)
+bool Labyrinth::readSketchFromFile(const std::string &path)
 {
     std::ifstream stream;
     stream.open(path, std::ios::binary);

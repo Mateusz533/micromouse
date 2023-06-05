@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    floodmovementgenerator.cpp \
     labyrinth.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     field.h \
+    floodmovementgenerator.h \
     labyrinth.h \
     mainwindow.h \
     mazegenerator.h \
@@ -25,6 +27,7 @@ HEADERS += \
     mazewidget.h \
     modifiedwilsongenerator.h \
     movement.h \
+    movementgenerator.h \
     myrobot.h \
     robot.h
 

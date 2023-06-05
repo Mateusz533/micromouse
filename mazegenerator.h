@@ -12,7 +12,8 @@ class MazeGenerator
   public:
     virtual void generateSketch(MazeSketch<bool, true> &sketch,
                                 const Field &start_pose = Field(-1, -1),
-                                const Field &target_pose = Field(-1, -1)) = 0;
+                                const Field &target_pose = Field(-1,
+                                                                 -1)) const = 0;
 };
 
 #endif  // MAZEGENERATOR_H
