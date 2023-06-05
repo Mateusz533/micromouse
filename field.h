@@ -3,6 +3,10 @@
 #define FIELD_H
 #include "movement.h"
 
+/** \brief Pole labiryntu
+ *
+ *  Struktura przechowująca współrzędne pola labiryntu.
+ */
 struct Field
 {
     Field() = delete;

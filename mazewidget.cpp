@@ -54,11 +54,11 @@ void MazeWidget::drawMaze(QPainter *painter)
     {
         for (int j = 0; j < maze_size; ++j)
         {
-            if (_sketch.getVerticalWall(i, j))
+            if (_sketch.getWall(Field(i, j), Movement::Right))
                 painter->drawLine(line_length * (1 + i), line_length * j,
                                   line_length * (1 + i), line_length * (j + 1));
 
-            if (_sketch.getHorizontalWall(j, i))
+            if (_sketch.getWall(Field(j, i), Movement::Down))
                 painter->drawLine(line_length * j, line_length * (i + 1),
                                   line_length * (1 + j), line_length * (i + 1));
         }

@@ -5,22 +5,28 @@
 #include "field.h"
 #include <vector>
 
+/** \brief Szkic ścian labiryntu
+ *
+ *  Szablon klasy przechowującej układ ścian labiryntu do zawodów 'micromouse'.
+ *  \param T typ danych reprezentujący pojedynczą ścianę
+ *  \param EXTERIOR_WALL wartość dla ścian zewnętrznych
+ */
 template <typename T, T EXTERIOR_WALL>
 class MazeSketch
 {
   public:
     MazeSketch() = delete;
     MazeSketch(const int size = 16, const T fill = EXTERIOR_WALL);
-    T getVerticalWall(const int index_x, const int index_y) const;
-    T getHorizontalWall(const int index_x, const int index_y) const;
     T getWall(const Field &position, const Movement move) const;
-    void setVerticalWall(const int index_x, const int index_y, const T value);
-    void setHorizontalWall(const int index_x, const int index_y, const T value);
     void setWall(const Field &position, const Movement move, const T value);
     bool isInside(const Field &position) const;
     int size() const;
 
   private:
+    void setVerticalWall(const int index_x, const int index_y, const T value);
+    void setHorizontalWall(const int index_x, const int index_y, const T value);
+    T getVerticalWall(const int index_x, const int index_y) const;
+    T getHorizontalWall(const int index_x, const int index_y) const;
     std::vector<std::vector<T>> _vertical_walls;
     std::vector<std::vector<T>> _horizontal_walls;
 };

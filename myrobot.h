@@ -8,6 +8,10 @@
 #include <queue>
 #include <vector>
 
+/** \brief Przykład robota 'micromouse'
+ *
+ *  Autorska klasa implementująca interfejs robota 'micromouse'.
+ */
 class MyRobot : public Robot
 {
   public:

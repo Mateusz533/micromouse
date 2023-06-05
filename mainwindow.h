@@ -13,6 +13,10 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+/** \brief Okno graficzne 'micromouse'
+ *
+ *  Klasa tworząca interfejs graficzny do symulacji zawodów 'micromouse'.
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

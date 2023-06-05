@@ -6,6 +6,11 @@
 #include "mazesketch.h"
 #include <QWidget>
 
+/** \brief GUI labiryntu
+ *
+ *  Klasa rysująca labirynt z symuacją zawodów 'micromouse' w czasie
+ *  rzeczywistym.
+ */
 class MazeWidget : public QWidget
 {
     Q_OBJECT

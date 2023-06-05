@@ -7,7 +7,7 @@
 
 Labyrinth::Labyrinth(const int size)
   : _sketch{ size }
-  , p_robot_new{ new MyRobot(0, 0, size / 2, size / 2, size) }
+  , p_robot{ new MyRobot(0, 0, size / 2, size / 2, size) }
 {
     std::srand(time(0));
 }
@@ -37,7 +37,7 @@ bool Labyrinth::getSketchFromFile(const std::string &path)
             case ' ':
                 break;
             case '_':
-                new_sketch.setHorizontalWall(j, i, true);
+                new_sketch.setWall(Field(j, i), Movement::Down, true);
                 break;
             default:
                 stream.close();
@@ -54,7 +54,7 @@ bool Labyrinth::getSketchFromFile(const std::string &path)
             case ' ':
                 break;
             case '|':
-                new_sketch.setVerticalWall(j, i, true);
+                new_sketch.setWall(Field(j, i), Movement::Right, true);
                 break;
             default:
                 stream.close();
@@ -159,7 +159,7 @@ void Labyrinth::generatePath(Sketch &sketch, Matrix &visited,
 void Labyrinth::restart()
 {
     const int size{ _sketch.size() };
-    p_robot_new.reset(new MyRobot(_robot_position, _target_position, size));
+    p_robot.reset(new MyRobot(_robot_position, _target_position, size));
 }
 
 bool Labyrinth::setTargetPosition(const int x, const int y)
@@ -209,7 +209,7 @@ void Labyrinth::step()
     const bool right{ _sketch.getWall(_robot_position, Movement::Right) };
     const bool up{ _sketch.getWall(_robot_position, Movement::Up) };
     const bool down{ _sketch.getWall(_robot_position, Movement::Down) };
-    const Movement movement = p_robot_new->run(left, right, up, down);
+    const Movement movement = p_robot->run(left, right, up, down);
 
     if (!_sketch.getWall(_robot_position, movement))
         _robot_position = _robot_position.positionAfterMove(movement);
