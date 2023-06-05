@@ -58,9 +58,26 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <pointsize>13</pointsize>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border-color: #888;
+	border-width: 1.5px;
+	border-style: solid;
+	border-radius: 15px;
+	color: #333;
+	background-color: #fff;
+	cursor: pointer;
+}
+QPushButton:hover {
+	background-color: #eee;
+}
+QPushButton:pressed {
+	background-color: #ccc;
+}</string>
        </property>
        <property name="text">
         <string>START</string>
@@ -83,9 +100,26 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <pointsize>13</pointsize>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border-color: #888;
+	border-width: 1.5px;
+	border-style: solid;
+	border-radius: 15px;
+	color: #333;
+	background-color: #fff;
+	cursor: pointer;
+}
+QPushButton:hover {
+	background-color: #eee;
+}
+QPushButton:pressed {
+	background-color: #ccc;
+}</string>
        </property>
        <property name="text">
         <string>PAUZA</string>
@@ -102,9 +136,26 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <pointsize>13</pointsize>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border-color: #888;
+	border-width: 1.5px;
+	border-style: solid;
+	border-radius: 15px;
+	color: #333;
+	background-color: #fff;
+	cursor: pointer;
+}
+QPushButton:hover {
+	background-color: #eee;
+}
+QPushButton:pressed {
+	background-color: #ccc;
+}</string>
        </property>
        <property name="text">
         <string>RESET</string>
@@ -134,7 +185,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="spacing">
-          <number>5</number>
+          <number>7</number>
          </property>
          <item>
           <widget class="QLabel" name="lbStartPose">
@@ -192,6 +243,9 @@
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="maximum">
                 <number>15</number>
                </property>
@@ -231,6 +285,9 @@
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="maximum">
                 <number>15</number>
                </property>
@@ -248,7 +305,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <property name="spacing">
-          <number>5</number>
+          <number>7</number>
          </property>
          <property name="sizeConstraint">
           <enum>QLayout::SetDefaultConstraint</enum>
@@ -317,6 +374,9 @@
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="maximum">
                 <number>15</number>
                </property>
@@ -356,6 +416,9 @@
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="maximum">
                 <number>15</number>
                </property>
@@ -387,8 +450,26 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>9</pointsize>
+           <pointsize>10</pointsize>
+           <bold>true</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	border-color: #888;
+	border-width: 1.5px;
+	border-style: solid;
+	border-radius: 15px;
+	color: #333;
+	background-color: #fff;
+	cursor: pointer;
+}
+QPushButton:hover {
+	background-color: #eee;
+}
+QPushButton:pressed {
+	background-color: #ccc;
+}</string>
          </property>
          <property name="text">
           <string>Wygeneruj nowy labirynt</string>
@@ -405,6 +486,29 @@
            <width>181</width>
            <height>51</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	border-color: #888;
+	border-width: 1.5px;
+	border-style: solid;
+	border-radius: 15px;
+	color: #333;
+	background-color: #fff;
+	cursor: pointer;
+}
+QPushButton:hover {
+	background-color: #eee;
+}
+QPushButton:pressed {
+	background-color: #ccc;
+}</string>
          </property>
          <property name="text">
           <string>Załaduj labirynt ...</string>
@@ -429,6 +533,12 @@
       <width>480</width>
       <height>480</height>
      </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #fff;
+border-color: #000;
+border-width: 3px;
+border-style: solid;</string>
     </property>
    </widget>
   </widget>
