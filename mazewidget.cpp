@@ -1,4 +1,3 @@
-
 #include "mazewidget.h"
 #include <QPainter>
 #include <QPainterPath>
@@ -42,7 +41,7 @@ void MazeWidget::drawMaze(QPainter *painter)
     const int line_length{ static_cast<int>(
       std::round(1.0 * frame_size / maze_size)) };
 
-    QPen pen(Qt::black, 3, Qt::SolidLine);
+    QPen pen(Qt::black, 4, Qt::SolidLine);
     painter->setPen(pen);
     QBrush background = QBrush(QColor(255, 255, 255));
     painter->fillRect(0, 0, frame_size, frame_size, background);

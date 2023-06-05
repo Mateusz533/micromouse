@@ -1,4 +1,3 @@
-
 #ifndef MAZEWIDGET_H
 #define MAZEWIDGET_H
 

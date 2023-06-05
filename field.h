@@ -1,4 +1,3 @@
-
 #ifndef FIELD_H
 #define FIELD_H
 #include "movement.h"

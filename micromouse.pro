@@ -13,14 +13,17 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mazewidget.cpp \
+    modifiedwilsongenerator.cpp \
     myrobot.cpp
 
 HEADERS += \
     field.h \
     labyrinth.h \
     mainwindow.h \
+    mazegenerator.h \
     mazesketch.h \
     mazewidget.h \
+    modifiedwilsongenerator.h \
     movement.h \
     myrobot.h \
     robot.h

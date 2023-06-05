@@ -1,4 +1,3 @@
-
 #ifndef MAZESKETCH_H
 #define MAZESKETCH_H
 

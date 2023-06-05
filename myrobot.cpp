@@ -1,4 +1,3 @@
-
 #include "myrobot.h"
 #include <algorithm>
 #include <set>
