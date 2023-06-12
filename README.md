@@ -13,4 +13,4 @@ The full documentation can be easly obtained from the doxygen file in the main d
 
 The GUI for this project was created using Qt Creator and an example of what it looks like is shown below.
 
-![Example view](./img/window-screen.png "Something is no yes :(")
+![Something is no yes :(](./img/window-screen.png "Example view")
