@@ -17,11 +17,17 @@ void MazeWidget::updateMaze(const Field &mouse_pose, const Field &target_pose,
     _mouse_position = mouse_pose;
     _target_position = target_pose;
     _sketch = sketch;
+    _path.clear();
+    _path.push_back(mouse_pose);
     update();
 }
 
 void MazeWidget::updateMousePosition(const Field &mouse_pose)
 {
+    if (_mouse_position == mouse_pose)
+        return;
+
+    _path.push_back(mouse_pose);
     _mouse_position = mouse_pose;
     update();
 }
@@ -63,13 +69,8 @@ void MazeWidget::drawMaze(QPainter *painter)
         }
     }
 
-    if (_target_position != _mouse_position)
-    {
-        drawCenteredImage(painter, _mouse_img, _mouse_position, line_length);
-        drawCenteredImage(painter, _target_img, _target_position, line_length);
-    }
-    else
-        drawCenteredImage(painter, _prize_img, _mouse_position, line_length);
+    drawPath(painter, line_length);
+    drawItems(painter, line_length);
 }
 
 void MazeWidget::drawCenteredImage(QPainter *painter, QImage &img,
@@ -78,4 +79,30 @@ void MazeWidget::drawCenteredImage(QPainter *painter, QImage &img,
     const int x = (frame_size - img.width()) / 2;
     const int y = (frame_size - img.height()) / 2;
     painter->drawImage(frame_size * field.x + x, frame_size * field.y + y, img);
+}
+
+void MazeWidget::drawItems(QPainter *painter, const int field_size)
+{
+    if (_target_position != _mouse_position)
+    {
+        drawCenteredImage(painter, _mouse_img, _mouse_position, field_size);
+        drawCenteredImage(painter, _target_img, _target_position, field_size);
+    }
+    else
+        drawCenteredImage(painter, _prize_img, _mouse_position, field_size);
+}
+
+void MazeWidget::drawPath(QPainter *painter, const int field_size)
+{
+    QPen pen(Qt::green, 4, Qt::SolidLine);
+    painter->setPen(pen);
+
+    for (int i = 0; i + 1 < _path.size(); ++i)
+    {
+        const QPoint start_point(field_size * (0.5 + _path[i].x),
+                                 field_size * (0.5 + _path[i].y));
+        const QPoint end_point(field_size * (0.5 + _path[i + 1].x),
+                               field_size * (0.5 + _path[i + 1].y));
+        painter->drawLine(start_point, end_point);
+    }
 }
